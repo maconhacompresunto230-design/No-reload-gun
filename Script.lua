@@ -1,4 +1,6 @@
 local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
 local player = Players.LocalPlayer
 
 local function monitorar(character)
@@ -20,6 +22,12 @@ local function monitorar(character)
             track:Stop(0)
         end
     end
+
+    RunService.RenderStepped:Connect(function()
+        if character.Parent then
+            humanoid.CameraOffset = Vector3.zero
+        end
+    end)
 end
 
 if player.Character then
