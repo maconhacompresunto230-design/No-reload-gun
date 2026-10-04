@@ -1,5 +1,4 @@
 local Players = game:GetService("Players")
-local RunService = game:GetService("RunService")
 
 local player = Players.LocalPlayer
 
@@ -8,25 +7,21 @@ local function monitorar(character)
     local animator = humanoid:WaitForChild("Animator")
 
     animator.AnimationPlayed:Connect(function(track)
-        local nome = track.Name:lower()
+        task.defer(function()
+            local nome = (track.Name or ""):lower()
+            local id = ""
 
-        if nome:find("reload") or nome:find("recarga") then
-            track:Stop(0)
-        end
-    end)
+            if track.Animation then
+                id = track.Animation.AnimationId:lower()
+            end
 
-    for _, track in ipairs(animator:GetPlayingAnimationTracks()) do
-        local nome = track.Name:lower()
-
-        if nome:find("reload") or nome:find("recarga") then
-            track:Stop(0)
-        end
-    end
-
-    RunService.RenderStepped:Connect(function()
-        if character.Parent then
-            humanoid.CameraOffset = Vector3.zero
-        end
+            if nome:find("reload")
+                or nome:find("recarga")
+                or nome:find("reloading")
+                or id:find("reload") then
+                track:Stop(0)
+            end
+        end)
     end)
 end
 
