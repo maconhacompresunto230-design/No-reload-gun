@@ -18,7 +18,13 @@ local function monitorar(character)
             if nome:find("reload")
                 or nome:find("recarga")
                 or nome:find("reloading")
-                or id:find("reload") then
+                or nome:find("recoil")
+                or nome:find("recuo")
+                or nome:find("shoot")
+                or nome:find("fire")
+                or nome:find("gun")
+                or id:find("reload")
+                or id:find("recoil") then
                 track:Stop(0)
             end
         end)
